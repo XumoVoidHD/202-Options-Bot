@@ -1,0 +1,9 @@
+[submodule "SPX-Script"]
+	path = SPX-Script
+	url = https://github.com/XumoVoidHD/SPX-Script
+[submodule "ESTX50-Script"]
+	path = ESTX50-Script
+	url = https://github.com/XumoVoidHD/ESTX50-Script
+[submodule "NDX-Script"]
+	path = NDX-Script
+	url = https://github.com/XumoVoidHD/NDX-Script
