@@ -7,3 +7,6 @@
 [submodule "NDX-Script"]
 	path = Options Re-Entry/NDX-Script
 	url = https://github.com/XumoVoidHD/NDX-Script
+[submodule "Option Reversal"]
+	path = Option Reversal
+	url = https://github.com/XumoVoidHD/IBKR-Option-Reversal-Bot
