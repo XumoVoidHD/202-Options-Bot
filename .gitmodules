@@ -13,3 +13,6 @@
 [submodule "NIKKIE225"]
 	path = NIKKIE225
 	url = https://github.com/XumoVoidHD/NIKKIE225.git
+[submodule "Options Re-Entry/NIKKEI225"]
+	path = Options Re-Entry/NIKKEI225
+	url = https://github.com/XumoVoidHD/NIKKEI225.git
