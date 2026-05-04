@@ -1,0 +1,248 @@
+2026-05-05 00:32:24,143 - INFO: 
+1. Testing connection...
+2026-05-05 00:32:25,129 - INFO: Connection status: True
+2026-05-05 00:32:25,604 - INFO: Current Time: 2026-05-04 15:02:25.604237-04:00
+2026-05-05 00:32:27,625 - INFO: 
+
+New Trading Session Start
+
+2026-05-05 00:32:27,626 - INFO: CURRENT PRICE: 59513
+2026-05-05 00:32:27,626 - INFO: DERIVED STRIKE PRICE: 59500
+2026-05-05 00:32:27,627 - INFO: CALL HEDGE STRIKE PRICE: 60125
+2026-05-05 00:32:27,627 - INFO: PUT HEDGE STRIKE PRICE: 58875
+2026-05-05 00:32:27,628 - INFO: CALL POSITION STRIKE PRICE: 59750
+2026-05-05 00:32:27,628 - INFO: PUT POSITION STRIKE PRICE: 59250
+2026-05-05 00:32:27,629 - INFO: Placing Hedge Call Order
+2026-05-05 00:32:43,459 - INFO: Call hedge still open but not filled
+2026-05-05 00:32:51,485 - INFO: Call hedge still open but not filled
+2026-05-05 00:32:59,524 - INFO: Call hedge still open but not filled
+2026-05-05 00:33:07,549 - INFO: Call hedge 0.0 is no longer in open orders — might be cancelled or filled.
+2026-05-05 00:33:07,550 - INFO: Placing Hedge Put Order
+2026-05-05 00:33:23,348 - INFO: Put Hedge 455.0 is filled.
+2026-05-05 00:33:28,884 - INFO: Put last price is 375.0
+2026-05-05 00:33:36,922 - INFO: Put Position 38794 is no longer in open orders — might be cancelled or filled.
+2026-05-05 00:33:36,923 - INFO: Put Order placed at 515.0
+2026-05-05 00:33:37,522 - INFO: Put Order sl is 875
+2026-05-05 00:33:46,593 - INFO: Call last price is 495.0
+2026-05-05 00:33:54,604 - INFO: Call Position 38801 is no longer in open orders — might be cancelled or filled.
+2026-05-05 00:33:54,605 - INFO: Call Order placed at 370.0
+2026-05-05 00:33:55,072 - INFO: Call Order sl is 630
+2026-05-05 00:33:58,647 - INFO: [CONFIG] Linked rules for this session: restrict_reentry_to_first_stopped_leg=True (if True, only the first SL-hit leg may re-enter for this session). move_opposite_leg_to_cost=True (if True, when one leg hits SL the other leg's stop can move to entry). respect_opposite_trailing=True (if True, skip that move once the opposite leg's trailing SL has tightened). max_re_entries_first_stopped_leg=0 (when first-stop restriction is enabled, only that leg may use these; otherwise each leg uses its own limit).
+2026-05-05 00:34:04,428 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:34:10,704 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:34:10,704 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:34:17,209 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:34:23,473 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:34:23,474 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:34:23,474 - INFO: Put Sell Leg Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:34:30,009 - INFO: Put Sell Leg Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:34:36,292 - INFO: Put Sell Leg Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:34:36,293 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:34:42,822 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:34:49,084 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:34:49,085 - INFO: Put Sell Leg Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:34:49,086 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:34:49,086 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:34:55,863 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:02,153 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:02,153 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:35:09,291 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:35:15,551 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:35:15,552 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:15,552 - INFO: Put Sell Leg Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:22,091 - INFO: Put Sell Leg Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:28,368 - INFO: Put Sell Leg Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:28,369 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:34,906 - INFO: Put Sell Leg Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:41,171 - INFO: Put Sell Leg Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:41,171 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:35:41,172 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:35:41,172 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:35:47,934 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:35:54,239 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:35:54,241 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:36:01,450 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 405.0, 'last': 495.0, 'mid': 387.5}
+2026-05-05 00:36:07,717 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:36:07,718 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:36:07,718 - INFO: Put Hedge Premium: {'bid': 515.0, 'ask': 615.0, 'last': 375.0, 'mid': 565.0}
+2026-05-05 00:36:14,239 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:36:20,497 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:36:20,498 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:36:27,027 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:36:33,295 - INFO: Call Sell Leg Premium: {'bid': 390.0, 'ask': 445.0, 'last': 495.0, 'mid': 417.5}
+2026-05-05 00:36:33,296 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:36:33,296 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:36:33,297 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:36:40,070 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:36:46,339 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:36:46,340 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:36:52,862 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:36:59,137 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:36:59,138 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:36:59,138 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:05,666 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:11,968 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:11,968 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:37:18,485 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:37:24,762 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:37:24,763 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:24,763 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:24,764 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:37:31,299 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:38,179 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:38,180 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:37:44,697 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:50,968 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:50,969 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:37:50,969 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:37:57,484 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:38:04,362 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:38:04,363 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:38:11,139 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:38:17,403 - INFO: Call Sell Leg Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:38:17,403 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:38:17,403 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:38:17,404 - INFO: Call Hedge Premium: {'bid': 370.0, 'ask': 425.0, 'last': 495.0, 'mid': 397.5}
+2026-05-05 00:38:24,176 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:38:38,627 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:38:38,628 - INFO: Call Hedge Premium: {'bid': 390.0, 'ask': 445.0, 'last': 495.0, 'mid': 417.5}
+2026-05-05 00:38:53,137 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:38:59,423 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:38:59,424 - INFO: Call Hedge Premium: {'bid': 395.0, 'ask': 445.0, 'last': 495.0, 'mid': 420.0}
+2026-05-05 00:38:59,424 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 575.0, 'last': 375.0, 'mid': 525.0}
+2026-05-05 00:39:05,936 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:39:12,204 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:39:12,204 - INFO: Call Hedge Premium: {'bid': 395.0, 'ask': 445.0, 'last': 495.0, 'mid': 420.0}
+2026-05-05 00:39:18,718 - INFO: Call Hedge Premium: {'bid': 395.0, 'ask': 445.0, 'last': 495.0, 'mid': 420.0}
+2026-05-05 00:39:24,987 - INFO: Call Hedge Premium: {'bid': 395.0, 'ask': 440.0, 'last': 495.0, 'mid': 417.5}
+2026-05-05 00:39:24,988 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:39:24,988 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:39:24,989 - INFO: Call Sell Leg Premium: {'bid': 395.0, 'ask': 445.0, 'last': 495.0, 'mid': 420.0}
+2026-05-05 00:39:31,747 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:39:38,056 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:39:38,057 - INFO: Call Sell Leg Premium: {'bid': 395.0, 'ask': 440.0, 'last': 495.0, 'mid': 417.5}
+2026-05-05 00:39:44,587 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:39:50,839 - INFO: Put Sell Leg Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:39:50,840 - INFO: Call Sell Leg Premium: {'bid': 395.0, 'ask': 440.0, 'last': 495.0, 'mid': 417.5}
+2026-05-05 00:39:50,840 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:39:57,344 - INFO: Put Hedge Premium: {'bid': 475.0, 'ask': 540.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:03,629 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:03,630 - INFO: Call Sell Leg Premium: {'bid': 395.0, 'ask': 440.0, 'last': 495.0, 'mid': 417.5}
+2026-05-05 00:40:10,156 - INFO: Call Sell Leg Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:40:16,423 - INFO: Call Sell Leg Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:40:16,423 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:16,424 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:16,424 - INFO: Call Hedge Premium: {'bid': 395.0, 'ask': 440.0, 'last': 495.0, 'mid': 417.5}
+2026-05-05 00:40:23,192 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:29,461 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:29,461 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:40:35,953 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:40:42,251 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:40:42,251 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:42,252 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:48,771 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:55,034 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:40:55,035 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:41:01,540 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:41:07,808 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:41:07,808 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:41:07,808 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:41:07,808 - INFO: Call Sell Leg Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:41:15,631 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:41:21,911 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:41:21,911 - INFO: Call Sell Leg Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:41:28,445 - INFO: Call Sell Leg Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:41:34,712 - INFO: Call Sell Leg Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:41:34,712 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:41:34,713 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:41:41,231 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:41:47,503 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:41:47,503 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:41:54,055 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:42:00,314 - INFO: Call Hedge Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:42:00,314 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:00,314 - INFO: Call Sell Leg Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:42:00,314 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:07,086 - INFO: Call Sell Leg Premium: {'bid': 375.0, 'ask': 435.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:42:13,342 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:42:13,343 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:19,886 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:26,183 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:26,184 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:42:26,184 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:32,706 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:38,979 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:38,980 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:42:45,519 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:52,393 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:52,393 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:42:52,394 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:42:52,394 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:42:59,183 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:43:05,437 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:43:05,438 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:12,200 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:18,456 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:18,457 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:43:18,457 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:24,977 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:31,235 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:31,236 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:37,859 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:44,127 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:44,128 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:43:44,129 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:43:44,129 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:43:50,909 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:43:57,174 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:43:57,175 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:03,688 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:09,981 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:09,983 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:09,983 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:44:16,506 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:44:22,770 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:44:22,770 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:29,274 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:35,533 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:35,534 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:44:35,534 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:35,535 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:44:42,555 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:48,804 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:44:48,804 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:44:55,348 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:01,616 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:01,616 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:45:01,617 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:45:08,138 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:45:14,408 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:45:14,409 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:45:20,915 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:45:27,185 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:45:27,186 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:45:27,186 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:27,187 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:33,694 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:39,943 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:39,944 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:46,464 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:52,739 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:52,740 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:45:52,740 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:45:59,257 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:46:05,545 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:46:05,545 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:46:12,059 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:46:18,351 - INFO: Put Hedge Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:46:18,351 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:46:18,352 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:46:18,352 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:46:25,751 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:46:32,024 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:46:32,025 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:46:38,564 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:46:44,837 - INFO: Put Sell Leg Premium: {'bid': 480.0, 'ask': 535.0, 'last': 375.0, 'mid': 507.5}
+2026-05-05 00:46:44,837 - INFO: Call Hedge Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:46:44,838 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
+2026-05-05 00:46:51,357 - INFO: Call Sell Leg Premium: {'bid': 380.0, 'ask': 430.0, 'last': 495.0, 'mid': 405.0}
