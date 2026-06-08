@@ -218,10 +218,10 @@ class IBTWSAPI:
         market_data = self.client.reqMktData(spx_contract)
         self.ib.sleep(2)
 
-        while util.isNan(market_data.last):
+        while util.isNan(market_data.close):
             self.ib.sleep(3)
-        if market_data.last > 0:
-            return market_data.last
+        if market_data.close > 0:
+            return market_data.close
         else:
             print("Market data is not subscribed or unavailable for", symbol)
             return None

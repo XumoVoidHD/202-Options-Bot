@@ -69,7 +69,7 @@ class Strategy:
 
     @staticmethod
     def round_to_valid_cl_strike(price):
-        return math.floor((price * 4) + 0.5) / 4
+        return math.floor((price * 2) + 0.5) / 2
 
     async def dprint(self, phrase):
         print(phrase)
@@ -125,23 +125,23 @@ class Strategy:
                 await self.dprint(f"DERIVED STRIKE PRICE: {closest_strike}")
 
                 if credentials.calc_values:
-                    self.otm_closest_call = closest_strike + (credentials.OTM_CALL_HEDGE * 0.25)
+                    self.otm_closest_call = closest_strike + (credentials.OTM_CALL_HEDGE * 0.5)
                 await self.dprint(f"CALL HEDGE STRIKE PRICE: {self.otm_closest_call}")
 
                 if credentials.calc_values:
-                    self.otm_closest_put = closest_strike - (credentials.OTM_PUT_HEDGE * 0.25)
+                    self.otm_closest_put = closest_strike - (credentials.OTM_PUT_HEDGE * 0.5)
                 await self.dprint(f"PUT HEDGE STRIKE PRICE: {self.otm_closest_put}")
 
                 if credentials.calc_values:
                     self.call_target_price = closest_strike
                     if credentials.ATM_CALL > 0:
-                        self.call_target_price += 0.25 * credentials.ATM_CALL
+                        self.call_target_price += 0.5 * credentials.ATM_CALL
                 await self.dprint(f"CALL POSITION STRIKE PRICE: {self.call_target_price}")
 
                 if credentials.calc_values:
                     self.put_target_price = closest_strike
                     if credentials.ATM_CALL > 0:
-                        self.put_target_price -= 0.25 * credentials.ATM_CALL
+                        self.put_target_price -= 0.5 * credentials.ATM_CALL
                 await self.dprint(f"PUT POSITION STRIKE PRICE: {self.put_target_price}")
                 if credentials.active_close_hedges:
                     await self.place_hedge_orders(call=True, put=True)
