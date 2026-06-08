@@ -204,6 +204,10 @@ class Strategy:
                     await self.dprint(f"PUT POSITION STRIKE PRICE: {self.put_target_price}")
 
                     await StrikeCoordinator.check_and_register_strikes(self, strike_step)
+                    await self.dprint(f"[MAIN] Strategy Final Call Position Strike: {self.call_target_price}")
+                    await self.dprint(f"[MAIN] Strategy Final Call Hedge Strike: {self.otm_closest_call}")
+                    await self.dprint(f"[MAIN] Strategy Final Put Position Strike: {self.put_target_price}")
+                    await self.dprint(f"[MAIN] Strategy Final Put Hedge Strike: {self.otm_closest_put}")
 
                     if ((credentials.active_close_hedges and not credentials.close_hedges)
                             or (credentials.close_hedges and credentials.active_close_hedges)):

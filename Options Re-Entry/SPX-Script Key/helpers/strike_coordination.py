@@ -118,7 +118,7 @@ class StrikeCoordinator:
                 strategy.otm_closest_put -= steps * strike_step
                 
             if conflict_detected:
-                await strategy.dprint("[STRIKE TRACKER] Conflicts resolved. Final adjusted strikes:")
+                await strategy.dprint("[STRIKE TRACKER] Strikes were changed in strategy due to conflict. Final adjusted strikes:")
                 await strategy.dprint(f"CALL POSITION STRIKE PRICE: {strategy.call_target_price}")
                 await strategy.dprint(f"CALL HEDGE STRIKE PRICE: {strategy.otm_closest_call}")
                 await strategy.dprint(f"PUT POSITION STRIKE PRICE: {strategy.put_target_price}")
