@@ -4,3 +4,12 @@
 [submodule "Options Re-Entry/NIKKEI225"]
 	path = Options Re-Entry/NIKKEI225
 	url = https://github.com/XumoVoidHD/NIKKEI225.git
+[submodule "Options Re-Entry/ESTX50-Script"]
+	path = Options Re-Entry/ESTX50-Script
+	url = https://github.com/XumoVoidHD/ESTX50-Script.git
+[submodule "Options Re-Entry/NDX-Script"]
+	path = Options Re-Entry/NDX-Script
+	url = https://github.com/XumoVoidHD/NDX-Script.git
+[submodule "Options Re-Entry/SPX-Script"]
+	path = Options Re-Entry/SPX-Script
+	url = https://github.com/XumoVoidHD/SPX-Script.git
