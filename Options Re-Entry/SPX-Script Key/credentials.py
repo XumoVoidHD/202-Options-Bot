@@ -33,6 +33,9 @@ date = "20260501"  # Date of contract (YYYY-MM-DD)
 # - XSP: 1
 XSP_SPX_STRIKE = 5
 
+# Allow re-entry if the stop loss was modified (trailed or moved to cost) during the session
+allow_reentry_after_sl_change = True
+
 # Re-entry behavior
 restrict_reentry_to_first_stopped_leg = True  # If True, only the first SL-hit leg can re-enter; if False, Call/Put re-enter independently
 number_of_re_entry = 0  # Re-entry attempts allowed for the first stopped leg (set >1 for multiple re-entries)

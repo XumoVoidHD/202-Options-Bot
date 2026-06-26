@@ -74,6 +74,8 @@ class Strategy:
         self.put_sl_moved_to_cost_by_opposite = False
         self.call_trailing_block_logged = False
         self.put_trailing_block_logged = False
+        self.call_sl_changed = False
+        self.put_sl_changed = False
         self._sl_state_lock = asyncio.Lock()
         self.should_continue = True
         self.testing = True
@@ -468,6 +470,7 @@ class Strategy:
             self.call_trail_activated = False
             self.call_sl_moved_to_cost_by_opposite = False
             self.call_trailing_block_logged = False
+            self.call_sl_changed = False
             self.atm_call_sl = self.atm_call_fill * (1 + (self.call_percent / 100))
             await self.dprint(f"Call Order placed at {self.atm_call_fill}")
             await self.dprint(f"Call Order sl is {self.atm_call_sl}")
@@ -540,6 +543,7 @@ class Strategy:
                         )
                         self.put_sl_moved_to_cost_by_opposite = True
                         self.put_trailing_block_logged = False
+                        self.put_sl_changed = True
                     elif (
                         self._opposite_leg_move_to_cost_active()
                         and not self._move_to_cost_entry_aligned()
@@ -631,10 +635,14 @@ class Strategy:
                                                            quantity=credentials.call_position, sl=self.atm_call_sl,
                                                            order_id=self.call_stp_id)
                         self.call_trail_activated = True
+                        self.call_sl_changed = True
                         temp_percentage += 1
 
                     await asyncio.sleep(credentials.call_check_time)
                 else:
+                    if not credentials.allow_reentry_after_sl_change and self.call_sl_changed:
+                        await self.dprint("[CALL] Re-entry locked/blocked because SL was modified during the session.")
+                        return
                     if self._is_reentry_blocked("call"):
                         await self.lprint(
                             "[RE-ENTRY] Call re-entry task ending: Put stop was hit first, so only Put may re-enter."
@@ -725,6 +733,7 @@ class Strategy:
             self.put_trail_activated = False
             self.put_sl_moved_to_cost_by_opposite = False
             self.put_trailing_block_logged = False
+            self.put_sl_changed = False
             self.atm_put_sl = self.atm_put_fill * (1 + (self.put_percent / 100))
             await self.dprint(f"Put Order placed at {self.atm_put_fill}")
             await self.dprint(f"Put Order sl is {self.atm_put_sl}")
@@ -797,6 +806,7 @@ class Strategy:
                         )
                         self.call_sl_moved_to_cost_by_opposite = True
                         self.call_trailing_block_logged = False
+                        self.call_sl_changed = True
                     elif (
                         self._opposite_leg_move_to_cost_active()
                         and not self._move_to_cost_entry_aligned()
@@ -888,10 +898,14 @@ class Strategy:
                                                            quantity=credentials.put_position, sl=self.atm_put_sl,
                                                            order_id=self.put_stp_id)
                         self.put_trail_activated = True
+                        self.put_sl_changed = True
                         temp_percentage += 1
 
                     await asyncio.sleep(credentials.put_check_time)
                 else:
+                    if not credentials.allow_reentry_after_sl_change and self.put_sl_changed:
+                        await self.dprint("[PUT] Re-entry locked/blocked because SL was modified during the session.")
+                        return
                     if self._is_reentry_blocked("put"):
                         await self.lprint(
                             "[RE-ENTRY] Put re-entry task ending: Call stop was hit first, so only Call may re-enter."
