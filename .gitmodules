@@ -1,12 +1,3 @@
-[submodule "SPX-Script"]
-	path = Options Re-Entry/SPX-Script
-	url = https://github.com/XumoVoidHD/SPX-Script
-[submodule "ESTX50-Script"]
-	path = Options Re-Entry/ESTX50-Script
-	url = https://github.com/XumoVoidHD/ESTX50-Script
-[submodule "NDX-Script"]
-	path = Options Re-Entry/NDX-Script
-	url = https://github.com/XumoVoidHD/NDX-Script
 [submodule "Option Reversal"]
 	path = Option Reversal
 	url = https://github.com/XumoVoidHD/IBKR-Option-Reversal-Bot
