@@ -41,3 +41,6 @@ force_run_second = 0
 
 # Logging
 enable_logging = True
+
+# Force run main.py even if no triggers occur
+force_run = True

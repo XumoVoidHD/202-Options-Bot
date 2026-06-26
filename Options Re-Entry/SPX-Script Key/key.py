@@ -104,7 +104,11 @@ class KeyMonitor:
         except Exception as exc:
             await self.dprint(f"IBKR disconnect warning: {exc}")
 
-    async def launch_main(self, reason):
+    async def launch_main(self, reason, is_forced=True):
+        if is_forced and not getattr(self.key_config, "force_run", True):
+            await self.dprint(f"Skipping launch of main.py. Reason: {reason} (force_run is False)")
+            await self.disconnect_ibkr()
+            return
         await self.dprint(f"Launching main.py. Reason: {reason}")
         await self.disconnect_ibkr()
         main_path = Path(__file__).with_name("main.py")
@@ -215,7 +219,7 @@ class KeyMonitor:
                     reasons.append(
                         f"Put {self.put_monitor_strike} bid +{round(put_move, 2)}%"
                     )
-                await self.launch_main(" / ".join(reasons))
+                await self.launch_main(" / ".join(reasons), is_forced=False)
                 return
 
             await asyncio.sleep(self.key_config.poll_seconds)
