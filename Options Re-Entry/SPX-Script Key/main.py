@@ -76,6 +76,8 @@ class Strategy:
         self.put_trailing_block_logged = False
         self.call_sl_changed = False
         self.put_sl_changed = False
+        self.call_sl_lock = asyncio.Lock()
+        self.put_sl_lock = asyncio.Lock()
         self._sl_state_lock = asyncio.Lock()
         self.should_continue = True
         self.testing = True
@@ -102,6 +104,8 @@ class Strategy:
         val = credentials.opposite_leg_move_to_cost
         return val if isinstance(val, bool) else (val > 0)
 
+    # Decision: Can we move Put SL to cost?
+    # Requirements: move-to-cost must be active, and if respect_trailing is True, Put trailing must not have started.
     def _may_move_put_sl_to_cost(self):
         if not self._opposite_leg_move_to_cost_active():
             return False
@@ -109,6 +113,8 @@ class Strategy:
             return True
         return not self.put_trail_activated
 
+    # Decision: Can we move Call SL to cost?
+    # Requirements: move-to-cost must be active, and if respect_trailing is True, Call trailing must not have started.
     def _may_move_call_sl_to_cost(self):
         if not self._opposite_leg_move_to_cost_active():
             return False
@@ -124,6 +130,7 @@ class Strategy:
             return self.call_rentry + 1
         return self.put_rentry + 1
 
+    # Requirement: both legs must be on the same entry index/number to allow move-to-cost.
     def _move_to_cost_entry_aligned(self):
         return self._entry_number("call") == self._entry_number("put")
 
@@ -135,6 +142,8 @@ class Strategy:
                 self.first_sl_leg = leg
             return self.first_sl_leg
 
+    # Decision: is re-entry blocked for this leg?
+    # Requirement: returns True if restrict_reentry_to_first_stopped_leg is True and the opposite leg stopped out first.
     def _is_reentry_blocked(self, leg):
         if not self._first_sl_reentry_lock_enabled():
             return False
@@ -517,68 +526,70 @@ class Strategy:
                             "[CALL SL] Call leg stopped out, but Put had already stopped out first. "
                             "Re-entry: only Put is allowed; Call will not re-enter."
                         )
-                    if (
-                        self._may_move_put_sl_to_cost()
-                        and self._move_to_cost_entry_aligned()
-                        and self.put_order_placed
-                        and self.put_stp_id
-                        and self.put_contract is not None
-                        and self.atm_put_fill is not None
-                    ):
-                        multiplier = float(credentials.opposite_leg_move_to_cost)
-                        self.atm_put_sl = round(self.atm_put_fill * multiplier, 1)
-                        await self.broker.modify_stp_order(
-                            contract=self.put_contract,
-                            side="BUY",
-                            quantity=credentials.put_position,
-                            sl=self.atm_put_sl,
-                            order_id=self.put_stp_id
-                        )
-                        await self.lprint(
-                            f"[MOVE-TO-COST] Put stop moved to cost-adjusted price {self.atm_put_sl} "
-                            f"(multiplier={multiplier}, allowed because Put trailing had not started yet, or respect-trailing is False)."
-                        )
-                        await self.dprint(
-                            f"[PUT] Opposite leg SL moved to cost: {self.atm_put_sl}"
-                        )
-                        self.put_sl_moved_to_cost_by_opposite = True
-                        self.put_trailing_block_logged = False
-                        self.put_sl_changed = True
-                    elif (
-                        self._opposite_leg_move_to_cost_active()
-                        and not self._move_to_cost_entry_aligned()
-                    ):
-                        await self.lprint(
-                            f"[MOVE-TO-COST] Put stop not changed: entry mismatch (Call entry "
-                            f"{self._entry_number('call')} vs Put entry {self._entry_number('put')}). "
-                            "Move-to-cost is only allowed when both legs are on the same entry count."
-                        )
-                        await self.dprint(
-                            f"[PUT] Move-to-cost skipped due to entry mismatch "
-                            f"(Call={self._entry_number('call')}, Put={self._entry_number('put')})"
-                        )
-                    elif (
-                        self._opposite_leg_move_to_cost_active()
-                        and self.put_order_placed
-                        and self.put_trail_activated
-                        and credentials.opposite_leg_move_to_cost_respect_trailing
-                    ):
-                        await self.lprint(
-                            "[MOVE-TO-COST] Put stop not changed: Put trailing SL had already tightened and "
-                            "respect_trailing is True."
-                        )
-                        await self.dprint(
-                            "[PUT] Move-to-cost skipped: put trailing SL already adjusted"
-                        )
-                    elif not self._opposite_leg_move_to_cost_active():
-                        await self.lprint(
-                            "[MOVE-TO-COST] Put stop not changed: opposite_leg_move_to_cost is False or inactive in credentials."
-                        )
-                    elif self._opposite_leg_move_to_cost_active():
-                        await self.lprint(
-                            "[MOVE-TO-COST] Put stop not changed: Put not open, or no stop order / fill data — "
-                            "nothing to modify."
-                        )
+                    # Lock Put SL to prevent conflicts with Put trailing adjustments
+                    async with self.put_sl_lock:
+                        if (
+                            self._may_move_put_sl_to_cost()
+                            and self._move_to_cost_entry_aligned()
+                            and self.put_order_placed
+                            and self.put_stp_id
+                            and self.put_contract is not None
+                            and self.atm_put_fill is not None
+                        ):
+                            multiplier = float(credentials.opposite_leg_move_to_cost)
+                            self.atm_put_sl = round(self.atm_put_fill * multiplier, 1)
+                            await self.broker.modify_stp_order(
+                                contract=self.put_contract,
+                                side="BUY",
+                                quantity=credentials.put_position,
+                                sl=self.atm_put_sl,
+                                order_id=self.put_stp_id
+                            )
+                            await self.lprint(
+                                f"[MOVE-TO-COST] Put stop moved to cost-adjusted price {self.atm_put_sl} "
+                                f"(multiplier={multiplier}, allowed because Put trailing had not started yet, or respect-trailing is False)."
+                            )
+                            await self.dprint(
+                                f"[PUT] Opposite leg SL moved to cost: {self.atm_put_sl}"
+                            )
+                            self.put_sl_moved_to_cost_by_opposite = True
+                            self.put_trailing_block_logged = False
+                            self.put_sl_changed = True
+                        elif (
+                            self._opposite_leg_move_to_cost_active()
+                            and not self._move_to_cost_entry_aligned()
+                        ):
+                            await self.lprint(
+                                f"[MOVE-TO-COST] Put stop not changed: entry mismatch (Call entry "
+                                f"{self._entry_number('call')} vs Put entry {self._entry_number('put')}). "
+                                "Move-to-cost is only allowed when both legs are on the same entry count."
+                            )
+                            await self.dprint(
+                                f"[PUT] Move-to-cost skipped due to entry mismatch "
+                                f"(Call={self._entry_number('call')}, Put={self._entry_number('put')})"
+                            )
+                        elif (
+                            self._opposite_leg_move_to_cost_active()
+                            and self.put_order_placed
+                            and self.put_trail_activated
+                            and credentials.opposite_leg_move_to_cost_respect_trailing
+                        ):
+                            await self.lprint(
+                                "[MOVE-TO-COST] Put stop not changed: Put trailing SL had already tightened and "
+                                "respect_trailing is True."
+                            )
+                            await self.dprint(
+                                "[PUT] Move-to-cost skipped: put trailing SL already adjusted"
+                            )
+                        elif not self._opposite_leg_move_to_cost_active():
+                            await self.lprint(
+                                "[MOVE-TO-COST] Put stop not changed: opposite_leg_move_to_cost is False or inactive in credentials."
+                            )
+                        elif self._opposite_leg_move_to_cost_active():
+                            await self.lprint(
+                                "[MOVE-TO-COST] Put stop not changed: Put not open, or no stop order / fill data — "
+                                "nothing to modify."
+                            )
                     self.call_order_placed = False
                     self.call_stp_id = None
                     if self.close_and_open_hedges_with_position:
@@ -621,28 +632,58 @@ class Strategy:
                         right="C"
                     )
                     await self.lprint(f"Call Sell Leg Premium: {premium_price}")
-                    if premium_price['ask'] <= self.atm_call_fill - temp_percentage * (
-                            credentials.call_entry_price_changes_by / 100) * self.atm_call_fill:
-                        self.atm_call_sl = self.atm_call_sl - (self.atm_call_fill * (credentials.call_change_sl_by / 100))
-                        await self.dprint(
-                            f"[CALL] Price dip detected - Adjusting trailing parameters"
-                            f"\nFill Price: {self.atm_call_fill}"
-                            f"\nCurrent Premium: {premium_price['ask']}"
-                            f"\nNew SL: {self.atm_call_sl}"
-                            f"\nTemp value: {temp_percentage}"
-                        )
-                        await self.broker.modify_stp_order(contract=self.call_contract, side="BUY",
-                                                           quantity=credentials.call_position, sl=self.atm_call_sl,
-                                                           order_id=self.call_stp_id)
-                        self.call_trail_activated = True
-                        self.call_sl_changed = True
-                        temp_percentage += 1
+                    
+                    should_skip_trailing = False
+                    # Lock Call SL for atomic check-and-modify operations
+                    async with self.call_sl_lock:
+                        # Double-check if a move-to-cost occurred while waiting for the premium price
+                        if (
+                            credentials.trailing_sl_respecting_opposite_move_to_cost
+                            and self.call_sl_moved_to_cost_by_opposite
+                        ):
+                            should_skip_trailing = True
+                            if not self.call_trailing_block_logged:
+                                await self.lprint(
+                                    "[CALL TRAIL] Trailing halted because Call SL was moved to cost by opposite leg flow "
+                                    "and trailing_sl_respecting_opposite_move_to_cost is True."
+                                )
+                                await self.dprint(
+                                    "[CALL] Trailing skipped: Call SL was moved to cost by opposite leg."
+                                )
+                                self.call_trailing_block_logged = True
+                        
+                        if not should_skip_trailing:
+                            # Decision: update trailing SL.
+                            # Requirement: ask price has dipped below the entry-based trailing threshold.
+                            if premium_price['ask'] <= self.atm_call_fill - temp_percentage * (
+                                    credentials.call_entry_price_changes_by / 100) * self.atm_call_fill:
+                                self.atm_call_sl = self.atm_call_sl - (self.atm_call_fill * (credentials.call_change_sl_by / 100))
+                                await self.dprint(
+                                    f"[CALL] Price dip detected - Adjusting trailing parameters"
+                                    f"\nFill Price: {self.atm_call_fill}"
+                                    f"\nCurrent Premium: {premium_price['ask']}"
+                                    f"\nNew SL: {self.atm_call_sl}"
+                                    f"\nTemp value: {temp_percentage}"
+                                )
+                                await self.broker.modify_stp_order(contract=self.call_contract, side="BUY",
+                                                                   quantity=credentials.call_position, sl=self.atm_call_sl,
+                                                                   order_id=self.call_stp_id)
+                                self.call_trail_activated = True
+                                self.call_sl_changed = True
+                                temp_percentage += 1
+                                
+                    if should_skip_trailing:
+                        await asyncio.sleep(credentials.call_check_time)
+                        continue
 
                     await asyncio.sleep(credentials.call_check_time)
                 else:
+                    # Decision: allow re-entry?
+                    # Requirement 1: block if allow_reentry_after_sl_change is False and SL was modified.
                     if not credentials.allow_reentry_after_sl_change and self.call_sl_changed:
                         await self.dprint("[CALL] Re-entry locked/blocked because SL was modified during the session.")
                         return
+                    # Requirement 2: block if first-stopped-leg rule restricts it.
                     if self._is_reentry_blocked("call"):
                         await self.lprint(
                             "[RE-ENTRY] Call re-entry task ending: Put stop was hit first, so only Put may re-enter."
@@ -656,7 +697,11 @@ class Strategy:
                         strike=self.call_target_price,
                         right="C"
                     )
+                    # Stop re-entry if the bot is shutting down
+                    if not self.should_continue:
+                        return
                     await self.lprint(f"Call Sell Leg Re-entry Premium: {premium_price}")
+                    # Requirement 3: ask price must be <= entry price and re-entry attempts must be below limits.
                     if premium_price['ask'] <= self.atm_call_fill and self.call_rentry < credentials.number_of_re_entry:
                         await self.dprint(
                             f"[CALL] Entry condition met - Initiating new position"
@@ -780,68 +825,70 @@ class Strategy:
                             "[PUT SL] Put leg stopped out, but Call had already stopped out first. "
                             "Re-entry: only Call is allowed; Put will not re-enter."
                         )
-                    if (
-                        self._may_move_call_sl_to_cost()
-                        and self._move_to_cost_entry_aligned()
-                        and self.call_order_placed
-                        and self.call_stp_id
-                        and self.call_contract is not None
-                        and self.atm_call_fill is not None
-                    ):
-                        multiplier = float(credentials.opposite_leg_move_to_cost)
-                        self.atm_call_sl = round(self.atm_call_fill * multiplier, 1)
-                        await self.broker.modify_stp_order(
-                            contract=self.call_contract,
-                            side="BUY",
-                            quantity=credentials.call_position,
-                            sl=self.atm_call_sl,
-                            order_id=self.call_stp_id
-                        )
-                        await self.lprint(
-                            f"[MOVE-TO-COST] Call stop moved to cost-adjusted price {self.atm_call_sl} "
-                            f"(multiplier={multiplier}, allowed because Call trailing had not started yet, or respect-trailing is False)."
-                        )
-                        await self.dprint(
-                            f"[CALL] Opposite leg SL moved to cost: {self.atm_call_sl}"
-                        )
-                        self.call_sl_moved_to_cost_by_opposite = True
-                        self.call_trailing_block_logged = False
-                        self.call_sl_changed = True
-                    elif (
-                        self._opposite_leg_move_to_cost_active()
-                        and not self._move_to_cost_entry_aligned()
-                    ):
-                        await self.lprint(
-                            f"[MOVE-TO-COST] Call stop not changed: entry mismatch (Call entry "
-                            f"{self._entry_number('call')} vs Put entry {self._entry_number('put')}). "
-                            "Move-to-cost is only allowed when both legs are on the same entry count."
-                        )
-                        await self.dprint(
-                            f"[CALL] Move-to-cost skipped due to entry mismatch "
-                            f"(Call={self._entry_number('call')}, Put={self._entry_number('put')})"
-                        )
-                    elif (
-                        self._opposite_leg_move_to_cost_active()
-                        and self.call_order_placed
-                        and self.call_trail_activated
-                        and credentials.opposite_leg_move_to_cost_respect_trailing
-                    ):
-                        await self.lprint(
-                            "[MOVE-TO-COST] Call stop not changed: Call trailing SL had already tightened and "
-                            "respect_trailing is True."
-                        )
-                        await self.dprint(
-                            "[CALL] Move-to-cost skipped: call trailing SL already adjusted"
-                        )
-                    elif not self._opposite_leg_move_to_cost_active():
-                        await self.lprint(
-                            "[MOVE-TO-COST] Call stop not changed: opposite_leg_move_to_cost is False or inactive in credentials."
-                        )
-                    elif self._opposite_leg_move_to_cost_active():
-                        await self.lprint(
-                            "[MOVE-TO-COST] Call stop not changed: Call not open, or no stop order / fill data — "
-                            "nothing to modify."
-                        )
+                    # Lock Call SL to prevent conflicts with Call trailing adjustments
+                    async with self.call_sl_lock:
+                        if (
+                            self._may_move_call_sl_to_cost()
+                            and self._move_to_cost_entry_aligned()
+                            and self.call_order_placed
+                            and self.call_stp_id
+                            and self.call_contract is not None
+                            and self.atm_call_fill is not None
+                        ):
+                            multiplier = float(credentials.opposite_leg_move_to_cost)
+                            self.atm_call_sl = round(self.atm_call_fill * multiplier, 1)
+                            await self.broker.modify_stp_order(
+                                contract=self.call_contract,
+                                side="BUY",
+                                quantity=credentials.call_position,
+                                sl=self.atm_call_sl,
+                                order_id=self.call_stp_id
+                            )
+                            await self.lprint(
+                                f"[MOVE-TO-COST] Call stop moved to cost-adjusted price {self.atm_call_sl} "
+                                f"(multiplier={multiplier}, allowed because Call trailing had not started yet, or respect-trailing is False)."
+                            )
+                            await self.dprint(
+                                f"[CALL] Opposite leg SL moved to cost: {self.atm_call_sl}"
+                            )
+                            self.call_sl_moved_to_cost_by_opposite = True
+                            self.call_trailing_block_logged = False
+                            self.call_sl_changed = True
+                        elif (
+                            self._opposite_leg_move_to_cost_active()
+                            and not self._move_to_cost_entry_aligned()
+                        ):
+                            await self.lprint(
+                                f"[MOVE-TO-COST] Call stop not changed: entry mismatch (Call entry "
+                                f"{self._entry_number('call')} vs Put entry {self._entry_number('put')}). "
+                                "Move-to-cost is only allowed when both legs are on the same entry count."
+                            )
+                            await self.dprint(
+                                f"[CALL] Move-to-cost skipped due to entry mismatch "
+                                f"(Call={self._entry_number('call')}, Put={self._entry_number('put')})"
+                            )
+                        elif (
+                            self._opposite_leg_move_to_cost_active()
+                            and self.call_order_placed
+                            and self.call_trail_activated
+                            and credentials.opposite_leg_move_to_cost_respect_trailing
+                        ):
+                            await self.lprint(
+                                "[MOVE-TO-COST] Call stop not changed: Call trailing SL had already tightened and "
+                                "respect_trailing is True."
+                            )
+                            await self.dprint(
+                                "[CALL] Move-to-cost skipped: call trailing SL already adjusted"
+                            )
+                        elif not self._opposite_leg_move_to_cost_active():
+                            await self.lprint(
+                                "[MOVE-TO-COST] Call stop not changed: opposite_leg_move_to_cost is False or inactive in credentials."
+                            )
+                        elif self._opposite_leg_move_to_cost_active():
+                            await self.lprint(
+                                "[MOVE-TO-COST] Call stop not changed: Call not open, or no stop order / fill data — "
+                                "nothing to modify."
+                            )
                     self.put_order_placed = False
                     self.put_stp_id = None
                     if self.close_and_open_hedges_with_position:
@@ -884,28 +931,58 @@ class Strategy:
                         right="P"
                     )
                     await self.lprint(f"Put Sell Leg Premium: {premium_price}")
-                    if premium_price['ask'] <= self.atm_put_fill - temp_percentage * (
-                            credentials.put_entry_price_changes_by / 100) * self.atm_put_fill:
-                        self.atm_put_sl = self.atm_put_sl - (self.atm_put_fill * (credentials.put_change_sl_by / 100))
-                        await self.dprint(
-                            f"[PUT] Price dip detected - Adjusting trailing parameters"
-                            f"\nFill Price: {self.atm_put_fill}"
-                            f"\nCurrent Premium: {premium_price['ask']}"
-                            f"\nNew SL: {self.atm_put_sl}"
-                            f"\nTemp value: {temp_percentage}"
-                        )
-                        await self.broker.modify_stp_order(contract=self.put_contract, side="BUY",
-                                                           quantity=credentials.put_position, sl=self.atm_put_sl,
-                                                           order_id=self.put_stp_id)
-                        self.put_trail_activated = True
-                        self.put_sl_changed = True
-                        temp_percentage += 1
+                    
+                    should_skip_trailing = False
+                    # Lock Put SL for atomic check-and-modify operations
+                    async with self.put_sl_lock:
+                        # Double-check if a move-to-cost occurred while waiting for the premium price
+                        if (
+                            credentials.trailing_sl_respecting_opposite_move_to_cost
+                            and self.put_sl_moved_to_cost_by_opposite
+                        ):
+                            should_skip_trailing = True
+                            if not self.put_trailing_block_logged:
+                                await self.lprint(
+                                    "[PUT TRAIL] Trailing halted because Put SL was moved to cost by opposite leg flow "
+                                    "and trailing_sl_respecting_opposite_move_to_cost is True."
+                                )
+                                await self.dprint(
+                                    "[PUT] Trailing skipped: Put SL was moved to cost by opposite leg."
+                                )
+                                self.put_trailing_block_logged = True
+                                
+                        if not should_skip_trailing:
+                            # Decision: update trailing SL.
+                            # Requirement: ask price has dipped below the entry-based trailing threshold.
+                            if premium_price['ask'] <= self.atm_put_fill - temp_percentage * (
+                                    credentials.put_entry_price_changes_by / 100) * self.atm_put_fill:
+                                self.atm_put_sl = self.atm_put_sl - (self.atm_put_fill * (credentials.put_change_sl_by / 100))
+                                await self.dprint(
+                                    f"[PUT] Price dip detected - Adjusting trailing parameters"
+                                    f"\nFill Price: {self.atm_put_fill}"
+                                    f"\nCurrent Premium: {premium_price['ask']}"
+                                    f"\nNew SL: {self.atm_put_sl}"
+                                    f"\nTemp value: {temp_percentage}"
+                                )
+                                await self.broker.modify_stp_order(contract=self.put_contract, side="BUY",
+                                                                   quantity=credentials.put_position, sl=self.atm_put_sl,
+                                                                   order_id=self.put_stp_id)
+                                self.put_trail_activated = True
+                                self.put_sl_changed = True
+                                temp_percentage += 1
+                                
+                    if should_skip_trailing:
+                        await asyncio.sleep(credentials.put_check_time)
+                        continue
 
                     await asyncio.sleep(credentials.put_check_time)
                 else:
+                    # Decision: allow re-entry?
+                    # Requirement 1: block if allow_reentry_after_sl_change is False and SL was modified.
                     if not credentials.allow_reentry_after_sl_change and self.put_sl_changed:
                         await self.dprint("[PUT] Re-entry locked/blocked because SL was modified during the session.")
                         return
+                    # Requirement 2: block if first-stopped-leg rule restricts it.
                     if self._is_reentry_blocked("put"):
                         await self.lprint(
                             "[RE-ENTRY] Put re-entry task ending: Call stop was hit first, so only Call may re-enter."
@@ -919,7 +996,11 @@ class Strategy:
                         strike=self.put_target_price,
                         right="P"
                     )
+                    # Stop re-entry if the bot is shutting down
+                    if not self.should_continue:
+                        return
                     await self.lprint(f"Put Sell Leg Re-entry Premium: {premium_price}")
+                    # Requirement 3: ask price must be <= entry price and re-entry attempts must be below limits.
                     if premium_price['ask'] <= self.atm_put_fill and self.put_rentry < credentials.number_of_re_entry:
                         await self.dprint(
                             f"[PUT] Entry condition met - Initiating new position"

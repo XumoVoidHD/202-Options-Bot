@@ -33,7 +33,7 @@ date = "20260501"  # Date of contract (YYYY-MM-DD)
 # - XSP: 1
 XSP_SPX_STRIKE = 5
 
-# Allow re-entry if the stop loss was modified (trailed or moved to cost) during the session
+# If True then it allows re-entry if the stop loss was modified (trailed or moved to cost) during the session
 allow_reentry_after_sl_change = True
 
 # Re-entry behavior

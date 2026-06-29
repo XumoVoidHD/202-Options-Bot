@@ -34,7 +34,7 @@ entry_hour = 1
 entry_minute = 30
 entry_second = 0
 
-# Force run main.py even if no triggers occur
+# If true then force run main.py even if no triggers occur
 force_run = True
 # Force-run time (US/Eastern). If no trigger by this time, run main.py anyway.
 force_run_hour = 12
